@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="title: redux 基础date: 2022-05-17 12:36:25tags: - reactcategories: - 前端 #3-编程&#x2F;笔记&#x2F;前端&#x2F;react 一、什么是 redux老生常谈之Flux与Redux思想  https:&#x2F;&#x2F;juejin.cn&#x2F;post&#x2F;6844903806644256782 React 是一个视图层框架，它主要负责的点是：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="https://kristennn.github.io/blog/2022/05/17/redux%20%E5%9F%BA%E7%A1%80/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="title: redux 基础date: 2022-05-17 12:36:25tags: - reactcategories: - 前端 #3-编程&#x2F;笔记&#x2F;前端&#x2F;react 一、什么是 redux老生常谈之Flux与Redux思想  https:&#x2F;&#x2F;juejin.cn&#x2F;post&#x2F;6844903806644256782 React 是一个视图层框架，它主要负责的点是：">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-05-17T04:36:25.000Z">
+<meta property="article:modified_time" content="2022-05-17T09:09:40.000Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/blog/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/blog/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Hexo</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/blog/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/blog/">Home</a></li><!--
+     --><!--
+       --><li><a href="/blog/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/blog/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/probberechts">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/blog/2022/05/17/hello-world/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://kristennn.github.io/blog/2022/05/17/redux%20%E5%9F%BA%E7%A1%80/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://kristennn.github.io/blog/2022/05/17/redux%20%E5%9F%BA%E7%A1%80/&text="><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://kristennn.github.io/blog/2022/05/17/redux%20%E5%9F%BA%E7%A1%80/&title="><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://kristennn.github.io/blog/2022/05/17/redux%20%E5%9F%BA%E7%A1%80/&is_video=false&description="><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=&body=Check out this article: https://kristennn.github.io/blog/2022/05/17/redux%20%E5%9F%BA%E7%A1%80/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://kristennn.github.io/blog/2022/05/17/redux%20%E5%9F%BA%E7%A1%80/&title="><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://kristennn.github.io/blog/2022/05/17/redux%20%E5%9F%BA%E7%A1%80/&title="><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://kristennn.github.io/blog/2022/05/17/redux%20%E5%9F%BA%E7%A1%80/&title="><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://kristennn.github.io/blog/2022/05/17/redux%20%E5%9F%BA%E7%A1%80/&title="><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://kristennn.github.io/blog/2022/05/17/redux%20%E5%9F%BA%E7%A1%80/&name=&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://kristennn.github.io/blog/2022/05/17/redux%20%E5%9F%BA%E7%A1%80/&t="><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E4%BB%80%E4%B9%88%E6%98%AF-redux"><span class="toc-number">1.</span> <span class="toc-text">一、什么是 redux</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81redux-%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%80%9D%E6%83%B3-%E5%8D%95%E5%90%91%E6%95%B0%E6%8D%AE%E6%B5%81"><span class="toc-number">2.</span> <span class="toc-text">二、redux 的基本思想-单向数据流</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89%E3%80%81redux-%E7%9A%84%E5%8E%9F%E5%88%99"><span class="toc-number">3.</span> <span class="toc-text">三、redux 的原则</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E5%8D%95%E4%B8%80%E6%95%B0%E6%8D%AE%E6%BA%90%E3%80%82%E5%8F%AA%E6%9C%89%E4%B8%80%E4%B8%AA-store"><span class="toc-number">3.0.1.</span> <span class="toc-text">3.1 单一数据源。只有一个 store</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E5%8F%AA%E6%9C%89-store-%E8%83%BD%E6%94%B9%E5%8F%98%E6%95%B0%E6%8D%AE"><span class="toc-number">3.0.2.</span> <span class="toc-text">3.2 只有 store 能改变数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E4%BD%BF%E7%94%A8%E7%BA%AF%E5%87%BD%E6%95%B0-reducer-%E8%BF%9B%E8%A1%8C%E7%8A%B6%E6%80%81%E4%BF%AE%E6%94%B9"><span class="toc-number">3.0.3.</span> <span class="toc-text">3.3 使用纯函数 reducer 进行状态修改</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9B%9B%E3%80%81redux-%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="toc-number">4.</span> <span class="toc-text">四、redux 基本使用</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">John Doe</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-05-17T04:36:25.000Z" itemprop="datePublished">2022-05-17</time>
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>title: redux 基础<br>date: 2022-05-17 12:36:25<br>tags: - react<br>categories: - 前端</p>
+<p>#3-编程&#x2F;笔记&#x2F;前端&#x2F;react</p>
+<h1 id="一、什么是-redux"><a href="#一、什么是-redux" class="headerlink" title="一、什么是 redux"></a>一、什么是 redux</h1><p>老生常谈之Flux与Redux思想  <a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903806644256782">https://juejin.cn/post/6844903806644256782</a></p>
+<p>React 是一个视图层框架，它主要负责的点是：数据 与 界面之间的交互渲染。<br>而在一个中大型项目中，涉及的组件多，组件之间的嵌套关系复杂，组件间数据的传递和使用就难以管理和维护。<br>一个数据可能有多个地方修改，导致有问题时很难排查。<br>数据层的不稳定性太高。</p>
+<p>针对这个问题，facebook团队先开发了 flux，一种应用程序中数据流的设计模式。基于这个设计思想，redux诞生了。</p>
+<h1 id="二、redux-的基本思想-单向数据流"><a href="#二、redux-的基本思想-单向数据流" class="headerlink" title="二、redux 的基本思想-单向数据流"></a>二、redux 的基本思想-单向数据流</h1><p>[image:F73F0F31-DD59-4E90-9BAA-14B78FBDFF35-40855-0003336EB8EFBFA9&#x2F;Snip20220511_1.png]</p>
+<p>为了保证数据的可维护性，将数据统一放在 store 中管理起来。<br>这个思想的核心是：管理数据的更新流程。<br>view 层可以通过接口从 store 中获取 state，view 层要更改数据，需通过构建 action，由 store 来更改数据。<br>这样的数据流向是单向的，数据的更新都有迹可循。整体可维护性提高。</p>
+<p>主要流程如下：</p>
+<p>页面行为 -&gt; 创建 action -&gt; dispatch分发器 -&gt; reducer 函数根据 action 返回 newState -&gt; store 拿到 newState 更新数据 -&gt; 页面通过api监听 store 更新时，更新页面数据</p>
+<h1 id="三、redux-的原则"><a href="#三、redux-的原则" class="headerlink" title="三、redux 的原则"></a>三、redux 的原则</h1><h3 id="3-1-单一数据源。只有一个-store"><a href="#3-1-单一数据源。只有一个-store" class="headerlink" title="3.1 单一数据源。只有一个 store"></a>3.1 单一数据源。只有一个 store</h3><p>整个项目只有一个 store ，在大型项目中可以进行代码分割，但根节点只有一个 store</p>
+<h3 id="3-2-只有-store-能改变数据"><a href="#3-2-只有-store-能改变数据" class="headerlink" title="3.2 只有 store 能改变数据"></a>3.2 只有 store 能改变数据</h3><p>State 的改变只能通过 store 本身，reducer 函数只是通过当前 state 和 action 计算出最新的 state，返回给 store。执行变更的是 store 本身</p>
+<h3 id="3-3-使用纯函数-reducer-进行状态修改"><a href="#3-3-使用纯函数-reducer-进行状态修改" class="headerlink" title="3.3 使用纯函数 reducer 进行状态修改"></a>3.3 使用纯函数 reducer 进行状态修改</h3><p>纯函数的定义如下：</p>
+<ul>
+<li>相同的入参总会返回相同的出参（出参只由入参所决定）</li>
+<li>没有副作用<br>Reducer 是纯函数，只负责通过当前 state 和 action 计算出最新的 state，返回给 store</li>
+</ul>
+<h1 id="四、redux-基本使用"><a href="#四、redux-基本使用" class="headerlink" title="四、redux 基本使用"></a>四、redux 基本使用</h1><ol>
+<li>引入 redux<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install redux --save</span><br></pre></td></tr></table></figure></li>
+<li>基本配置<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">import &#123; createStore &#125; from &#x27;redux&#x27;</span><br><span class="line">// reducers 纯函数</span><br><span class="line">function reducers (state = &#123; val: 0 &#125;, action) &#123;</span><br><span class="line">	// 根据 action type 编写处理逻辑</span><br><span class="line">	switch (action.type) &#123;</span><br><span class="line">		case &#x27;add_val&#x27;:</span><br><span class="line">			// 注意先深拷贝，不能直接改变 state 的值</span><br><span class="line">			const newState = JSON.parse(JSON.stringify(state))</span><br><span class="line">			newState.val += action.value</span><br><span class="line">			return newState</span><br><span class="line">		default:</span><br><span class="line">			return state</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">// 传入 reducers 创建 store</span><br><span class="line">const store = createStore(reducers)</span><br><span class="line">// 获取状态</span><br><span class="line">const value = store.getState().val</span><br><span class="line">// 订阅 store 的变动，执行回调</span><br><span class="line">store.subscribe(() =&gt; &#123;</span><br><span class="line">	console.log(&#x27;store 更新啦&#x27;)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">// 创建 action，对象中需包含 type 字段，说明此次变动</span><br><span class="line">const action = &#123;</span><br><span class="line">	type: &#x27;add_val&#x27;,</span><br><span class="line">	value: 2</span><br><span class="line">&#125;</span><br><span class="line">// 调用 dispatch 来更新状态</span><br><span class="line">store.dispatch(action)</span><br></pre></td></tr></table></figure></li>
+</ol>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/blog/">Home</a></li>
+         
+          <li><a href="/blog/about/">About</a></li>
+         
+          <li><a href="/blog/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/probberechts">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E4%BB%80%E4%B9%88%E6%98%AF-redux"><span class="toc-number">1.</span> <span class="toc-text">一、什么是 redux</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81redux-%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%80%9D%E6%83%B3-%E5%8D%95%E5%90%91%E6%95%B0%E6%8D%AE%E6%B5%81"><span class="toc-number">2.</span> <span class="toc-text">二、redux 的基本思想-单向数据流</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89%E3%80%81redux-%E7%9A%84%E5%8E%9F%E5%88%99"><span class="toc-number">3.</span> <span class="toc-text">三、redux 的原则</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E5%8D%95%E4%B8%80%E6%95%B0%E6%8D%AE%E6%BA%90%E3%80%82%E5%8F%AA%E6%9C%89%E4%B8%80%E4%B8%AA-store"><span class="toc-number">3.0.1.</span> <span class="toc-text">3.1 单一数据源。只有一个 store</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E5%8F%AA%E6%9C%89-store-%E8%83%BD%E6%94%B9%E5%8F%98%E6%95%B0%E6%8D%AE"><span class="toc-number">3.0.2.</span> <span class="toc-text">3.2 只有 store 能改变数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E4%BD%BF%E7%94%A8%E7%BA%AF%E5%87%BD%E6%95%B0-reducer-%E8%BF%9B%E8%A1%8C%E7%8A%B6%E6%80%81%E4%BF%AE%E6%94%B9"><span class="toc-number">3.0.3.</span> <span class="toc-text">3.3 使用纯函数 reducer 进行状态修改</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9B%9B%E3%80%81redux-%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="toc-number">4.</span> <span class="toc-text">四、redux 基本使用</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://kristennn.github.io/blog/2022/05/17/redux%20%E5%9F%BA%E7%A1%80/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://kristennn.github.io/blog/2022/05/17/redux%20%E5%9F%BA%E7%A1%80/&text="><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://kristennn.github.io/blog/2022/05/17/redux%20%E5%9F%BA%E7%A1%80/&title="><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://kristennn.github.io/blog/2022/05/17/redux%20%E5%9F%BA%E7%A1%80/&is_video=false&description="><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=&body=Check out this article: https://kristennn.github.io/blog/2022/05/17/redux%20%E5%9F%BA%E7%A1%80/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://kristennn.github.io/blog/2022/05/17/redux%20%E5%9F%BA%E7%A1%80/&title="><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://kristennn.github.io/blog/2022/05/17/redux%20%E5%9F%BA%E7%A1%80/&title="><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://kristennn.github.io/blog/2022/05/17/redux%20%E5%9F%BA%E7%A1%80/&title="><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://kristennn.github.io/blog/2022/05/17/redux%20%E5%9F%BA%E7%A1%80/&title="><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://kristennn.github.io/blog/2022/05/17/redux%20%E5%9F%BA%E7%A1%80/&name=&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://kristennn.github.io/blog/2022/05/17/redux%20%E5%9F%BA%E7%A1%80/&t="><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2022
+    John Doe
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/blog/">Home</a></li><!--
+     --><!--
+       --><li><a href="/blog/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/blog/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/probberechts">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/blog/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
